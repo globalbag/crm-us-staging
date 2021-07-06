@@ -1,0 +1,6 @@
+{{ table|raw }}
+
+<template class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    <button type="button" class="btn btn-primary" form="{{ FormID }}" onclick="BN.Route('{{ ModuleUrl|raw }}', {cmd: 'prices_new', ProductID: '{{ ProductID }}'});">Agregar</button>
+</template>

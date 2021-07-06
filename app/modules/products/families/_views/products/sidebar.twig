@@ -1,0 +1,13 @@
+<h4>{{ ProductInfo.ProductName|raw }}</h4>
+<br>
+SKU: <strong class="text-info">{{ ProductInfo.ProductCode }}</strong>
+<br>
+Cantidad por Empaque: <strong class="text-info">{{ ProductInfo.ProductQtyPP }}</strong>
+<br>
+Descripción: <em>{{ ProductInfo.ProductDescription }}</em>
+<br>
+<div class="hrlabel" style=""><span class="white">Parámetros de la Familia</span></div>
+{%  for param in param_list %}
+    <br>
+{{ param.name|raw }}: <strong class="text-info">{{ param.value|raw }}</strong>
+{% endfor %}

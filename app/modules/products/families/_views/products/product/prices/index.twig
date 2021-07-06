@@ -1,0 +1,27 @@
+{% if table %}
+    <div class="row">
+        <div class="col-sm-6 col-md-offset-3">{{ table|raw }}</div>
+    </div>
+{% else %}
+    <div class="alert alert-warning">No existen resultados.</div>
+{% endif %}
+
+<template rel="actions">
+
+    <template rel="left">
+        <button class="btn btn-default" type="button" onclick="products_home(); return false;">Volver a Productos</button>
+    </template>
+
+    <template rel="right">
+        <button class="btn btn-primary" type="button" onclick="brand_families_products_prices_new(); return false;">Agregar</button>
+    </template>
+
+</template>
+
+<script>
+
+    function brand_families_products_prices_new() {
+        BN.Route('', {cmd: 'prices_new', BrandID : '{{  BrandInfo.BrandID }}', BFamilyID: '{{ BFamilyInfo.BFamilyID }}', ProductID: '{{ ProductInfo.ProductID }}'});
+    }
+
+</script>

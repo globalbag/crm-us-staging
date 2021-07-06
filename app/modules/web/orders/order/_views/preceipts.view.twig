@@ -1,0 +1,34 @@
+{% if preceipts %}
+    {% for preceipt in preceipts %}
+        <div>
+            <div>Complemento: {{ preceipt.WOCFDICode }}</div>
+            <div>Fecha: {{ preceipt.WOCFDIDate|date(dateFormat) }}</div>
+            <div><a href="#" onclick="web_order_preceipt_download('{{ preceipt.WOCFDIID }}', 'xml'); return false;">Descargar XML</a> <a href="#" onclick="web_order_preceipt_view('{{ preceipt.WOCFDIID }}'); return false;">Ver PDF</a>   {% if WOrder.WOrderStatus != order_status_list.cancelled.value %}<a href="#" onclick="web_order_preceipt_delete('{{ preceipt.WOCFDIID }}'); return false;">Eliminar</a> {% endif %}</div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-warning">Sin complementos de pago.</div>
+{% endif %}
+
+
+<script>
+    function web_order_preceipt_new()
+    {
+        BN.Route('{{ ModuleUrlRoot }}preceipts/', {WOrderID: '{{ WOrderID }}', cmd: 'new'});
+    }
+
+    function web_order_preceipt_download(WOCFDIID, type)
+    {
+        BN.Route('{{ ModuleUrlRoot }}preceipts/', {WOrderID: '{{ WOrderID }}', cmd: 'download', WOCFDIID: WOCFDIID, type: type});
+    }
+
+    function web_order_preceipt_view(WOCFDIID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}preceipts/', {WOrderID: '{{ WOrderID }}', cmd: 'view', WOCFDIID: WOCFDIID});
+    }
+
+    function web_order_preceipt_delete(WOCFDIID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}preceipts/', {WOrderID: '{{ WOrderID }}', cmd: 'delete', WOCFDIID: WOCFDIID});
+    }
+</script>

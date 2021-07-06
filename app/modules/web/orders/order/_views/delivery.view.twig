@@ -1,0 +1,92 @@
+<div class="" >
+
+    {% if delivery_list %}
+
+        <table class="table table-condensed">
+                <thead>
+                        <tr>
+                                <td class="text-center"><strong>Fecha</strong></td>
+                                <td class="text-center"><strong>Paqueter&iacute;a</strong></td>
+                                <td class="text-center"><strong>Referencia</strong></td>
+                                <td class="text-center"><strong>Status</strong></td>
+                                <td class="text-center">&nbsp;</td>
+                        </tr>
+                </thead>
+                <tbody>
+                {% for delivery_info in delivery_list %}
+
+                        <tr>
+                                <td class="text-center">{{ delivery_info.WODeliveryDate|date(dateFormat) }}</td>
+                                <td class="text-center">{{ delivery_info.WODeliveryCompany|raw }}</td>
+                                <td class="text-center">{{ delivery_info.WODeliveryTCode|raw }}</td>
+                                <td class="text-center">
+                                        {% for status_info in status_list %}
+
+                                                {% if status_info.value == delivery_info.WODeliveryStatus %}
+                                                        <span class="badge badge-dark" style="color: #FFF; background-color: {{ status_info.color }} !important;">{{ status_info.name_en|raw }}</span>
+                                                {% endif %}
+
+                                        {% endfor %}
+                                </td>
+                                <td class="text-center">
+                                        {% if WOrder.WOrderStatus != order_status_list.cancelled.value %}
+                                        <ul class="list-inline actions">
+                                                <li>
+                                                        <div class="dropdown">
+                                                                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></a>
+                                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                                {% if delivery_info.WODeliveryStatus != status_list.reject.value %}
+
+{#                                                                        {% if delivery_info.WODeliveryStatus == status_list.pending.value or delivery_info.WODeliveryStatus == status_list.ontheway.value %}#}
+                                                                        <li><a href="javascript:void(0);" onclick="web_order_delivery_update('{{ delivery_info.WODeliveryID }}'); return false;" >Update</a></li>
+{#                                                                        {% endif %}#}
+
+                                                                        <li><a href="javascript:void(0);" onclick="web_order_delivery_reject('{{ delivery_info.WODeliveryID }}'); return false;">Cancel</a></li>
+
+                                                                {% endif %}
+                                                                        <li><a href="javascript:void(0);" onclick="web_order_delivery_info('{{ delivery_info.WODeliveryID }}'); return false;">Details</a></li>
+                                                                </ul>
+                                                        </div>
+                                                </li>
+                                        </ul>
+                                        {% endif %}
+                                </td>
+                        </tr>
+
+                {% endfor %}
+                </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">Sin información de env&iacute;o. Presiona <a href="javascript:void(0);" onclick="web_order_delivery_new(); return false;">aquí</a> para ingresar número de guia.</div>
+    {% endif %}
+
+</div>
+
+<script>
+
+    function web_order_delivery_new()
+    {
+        BN.Route('{{ ModuleUrlRoot }}delivery/', {WOrderID: '{{ WOrderID }}', cmd: 'new'});
+    }
+
+    function web_order_delivery_success(WODeliveryID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}delivery/', {WOrderID: '{{ WOrderID }}', cmd: 'success', WODeliveryID:WODeliveryID});
+    }
+
+    function web_order_delivery_reject(WODeliveryID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}delivery/', {WOrderID: '{{ WOrderID }}', cmd: 'reject', WODeliveryID:WODeliveryID});
+    }
+
+    function web_order_delivery_info(WODeliveryID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}delivery/', {WOrderID: '{{ WOrderID }}', cmd: 'info', WODeliveryID:WODeliveryID});
+    }
+
+    function web_order_delivery_update(WODeliveryID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}delivery/', {WOrderID: '{{ WOrderID }}', cmd: 'update', WODeliveryID:WODeliveryID});
+    }
+
+</script>

@@ -1,0 +1,73 @@
+<form name="{{ FormID }}" id="{{ FormID }}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ ModuleUrl }}" autocomplete="off">
+
+    <input type="hidden" name="cmd" value="new_add">
+    <input type="hidden" name="WOrderID" value="{{ WOrder.WOrderID }}">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="order_etc" class="small control-label">{{ 'Fecha'|trans }}</label>
+            <input type="text" class="form-control"  name="WODeliveryDate" data-rule-required="true" value="{{ "now"|date(dateFormat) }}"/>
+        </div>
+        <div class="col-sm-6">
+            <label for="order_etc" class="small control-label">{{ 'Paquetería'|trans }}</label>
+            <select class="form-control"  name="WODeliveryCompanyID" data-rule-required="true">
+                <option value="">-</option>
+                {{ ShippingCompanies|raw }}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="order_etc" class="small control-label">{{ 'Código de Rastreo'|trans }}</label>
+            <input type="text" class="form-control"  name="WODeliveryTCode" data-rule-required="true"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+                <label for="order_etc" class="small control-label">{{ 'Productos Incluidos'|trans }}</label>
+        </div>
+    </div>
+
+    {% for item_info in item_list %}
+
+        {% if item_info.WOItemDeliveryStatus != 2 %}
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <p class="form-control-static">{{ item_info.WOItemName|raw }}</p>
+                <input type="hidden" name="WOItem[{{ item_info.WOItemID }}]Product">
+            </div>
+            <div class="col-sm-2">
+                <select name="WOItem[{{ item_info.WOItemID }}]" class="form-control"  data-rule-required="true">
+                    {% for ii in range(0, (item_info.WOItemQty - item_info.WOItemDeliveryItems)|default(0) ) %}
+                    <option value="{{ ii }}">{{ ii }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% endif %}
+
+    {% endfor %}
+
+    <input type="hidden" name="WOItemAlert">
+
+    <div class="BNBottomMenu">
+        <div class="pull-right">
+            <button class="btn btn-default" onclick="BN.WinClose(); return false;">{{ 'Cerrar'|trans }}</button>
+            <button class="btn btn-primary" form="{{ FormID }}">{{ 'Agregar Envío'|trans }}</button>
+        </div>
+    </div>
+
+</form>
+<script>
+
+    BN_Forms.init('{{ FormID }}');
+
+    $(BN.tools.jqselect('{{ FormID }}', 'WODeliveryDate')).datetimepicker({
+        minDate:0,
+        timepicker:false,
+        format:'{{ dateFormat }}',
+    });
+
+</script>

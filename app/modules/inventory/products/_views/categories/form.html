@@ -1,0 +1,32 @@
+<form id="--FormID--" name="--FormID--" class="form-horizontal" action="--ModuleUrl--" method="post">
+    <input type="hidden" name="cmd" id="cmd" value="new_add"/>
+    <input name="CategoryID" type="hidden" >
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="CategoryName">Nombre</label>
+        <div class="col-xs-10">
+            <input id="CategoryName" name="CategoryName" type="text" class="form-control" data-rule-required="true" tabindex="-1" autofocus>
+        </div>
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+    {% if CallerForm %}
+        <button type="button" class="btn" onclick="$('#{{ CallerForm }} select[name={{ CallerFormField }}]').select2('val', ''); BN.WinClose();">Cerrar</button>
+    {% else %}
+        <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    {% endif %}
+
+    <button class="btn btn-primary" id="ActionButton" form="--FormID--" type="submit">Aceptar</button>
+
+</div>
+
+
+<script type="text/javascript">
+    <!--
+
+    BN.Form('--FormID--', {ltype: 'full-modal'});
+
+    -->
+</script>

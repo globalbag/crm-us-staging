@@ -1,0 +1,103 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ FormUrl|default(ModuleUrl)|raw }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd }}"/>
+    <input name="BrandID" type="hidden" >
+    <input name="BFamilyID" type="hidden" >
+    <input name="ProductID" type="hidden" >
+
+
+    <div class="form-group">
+
+        <div class="col-sm-12">
+            <label class="form-label" for="ProductName">Nombre</label>
+            <input type="text" name="ProductName" id="ProductName" class="form-control" data-rule-required="true">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-sm-12">
+            <label class="form-label" for="ProductDescription">Descripción</label>
+        </div>
+        <div class="col-sm-12">
+            <textarea name="ProductDescription" id="ProductDescription" class="form-control" rows="6"></textarea>
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <div class="col-sm-4">
+            <label class="form-label" for="ProductCode">SKU</label>
+        </div>
+
+        <div class="col-sm-8">
+            <label class="form-label" for="ProductQtyPP">Cantidad por Empaque</label>
+
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="col-sm-4">
+            <input type="text" name="ProductCode" id="ProductCode" class="form-control" data-rule-required="true">
+        </div>
+
+        <div class="col-sm-2">
+            <input type="number" name="ProductQtyPP" id="ProductQtyPP" class="form-control" data-rule-required="true">
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+    <div class="hrlabel" style=""><span class="white">Parámetros de la Familia</span></div>
+
+    <div class="form-group">
+
+        {% for param_info in params %}
+
+            {% if param_info.BParamType == 'text' or param_info.BParamType == 'select' %}
+            <div class="col-sm-12">
+                <label class="small" for="PFamilyDataInput-{{ param_info.BParamID }}">{{ param_info.BParamName|raw }}{% if param_info.BParamComment %} <small>({{ param_info.BParamComment|raw }})</small>{% endif %}</label>
+            </div>
+
+            <div class="col-sm-6">
+                {% if param_info.BParamType == 'text' %}
+                    <input type="text" name="PFamilyData[{{ param_info.BParamCode }}]" id="PFamilyDataInput-{{ param_info.BParamID }}" class="form-control" >
+                    {% elseif param_info.BParamType == 'select' %}
+                    <select name="PFamilyData[{{ param_info.BParamID }}]" id="PFamilyData_{{ param_info.BParamID }}" class="form-control" >
+                        <option value="">-</option>
+                        {% for data in param_info.BParamData %}
+                            <option value="{{ data.id }}">{{ data.name|raw }}</option>
+                        {% endfor %}
+                    </select>
+                    <script>
+                        $('#PFamilyData_{{ param_info.BParamID }}').select2();
+                    </script>
+                {% endif %}
+            </div>
+            <div class="clearfix"></div>
+        {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+
+    <div class="pull-right">
+
+        <button type="button" class="btn" onclick="BN.WinClose();">Cancelar</button>
+        <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">{% if cmd == 'product_new_add' %}Agregar{% else %}Guardar{% endif %}</button>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+</script>

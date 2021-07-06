@@ -1,0 +1,35 @@
+<div class="" >
+
+    <div class="form-group">
+        <label>Status</label>
+        <p class="form-control-static"><span class="badge badge-dark" style="color: #FFF; background-color: {{ status_info.color }} !important;">{{ status_info.name|raw }}</span></p>
+    </div>
+
+    {% if WOrder.WOrderStatus == status_list.cancelled.value %}
+
+    <div class="form-group">
+        <label>Motivo de Cancelaci&oacute;n</label>
+        <p class="form-control-static">{{ WOrderCancelInfo.Reason|raw }}</p>
+    </div>
+    {% if WOrderCancelInfo.Comment %}
+    <div class="form-group">
+        <label>Comentario de Cancelaci&oacute;n</label>
+        <p class="form-control-static">{{ WOrderCancelInfo.Comment|raw }}</p>
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+    <div class="form-group">
+        <label>Total Orden</label>
+        <p class="form-control-static">{{ WOrder.WOrderTotalTotal|money('', WOrder.WOrderCurrency|raw) }}</p>
+    </div>
+
+    <div class="form-group">
+        <label>Saldo</label>
+        <p class="form-control-static">{{ WOrder.WOrderTotalPaymentsDebt|money('', WOrder.WOrderCurrency|raw) }}</p>
+    </div>
+
+
+
+</div>

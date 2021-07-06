@@ -1,0 +1,22 @@
+{% if table %}
+    {{ table|raw }}
+{% else %}
+    <div class="alert alert-warning">No existen resultados.</div>
+{% endif %}
+
+<template rel="actions">
+
+    <template rel="left">
+        <button class="btn btn-default" type="button" onclick="brand_home(); return false;">Volver a Marcas</button>
+    </template>
+
+    <template rel="right">
+        <button class="btn btn-primary" type="button" onclick="brand_params_new(); return false;">Agregar</button>
+    </template>
+
+</template>
+<script>
+    function brand_params_new() {
+        BN.Route('', {cmd: 'params_new', 'BrandID' : '{{  BrandInfo.BrandID }}'});
+    }
+</script>

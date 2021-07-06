@@ -1,0 +1,10 @@
+POST {{ endpoint }}/account/confirm
+Authorization: Bearer {{ apikey }}
+Content-Type: application/json
+
+{
+  "WUserID" : "4",
+  "Token": "Code123"
+}
+
+

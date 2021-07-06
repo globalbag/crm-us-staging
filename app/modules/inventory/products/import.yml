@@ -1,0 +1,33 @@
+ImportFields:
+            -
+               id: BrandID
+               name: Marca
+            -
+               id: CategoryID
+               name: Categoría
+            -
+               id: ProductCode
+               name: Código
+            -
+               id: ProductName
+               name: Nombre
+               required: 1
+            -
+               id: ProductDescription
+               name: Descripción
+            -
+               id: PPricePrice
+               name: Precio USD
+            -
+               id: PPriceDiscountLimit
+               name: Descuento
+
+ImportAlerts:
+              unknown_brand: La marca no existe
+              unknown_category: La categoría no existe
+              pcode_exist: El código del producto ya existe
+              pname_exist: El nombre del producto ya existe
+              required: El campo ya existe
+
+
+

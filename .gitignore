@@ -1,0 +1,10 @@
+.idea/
+/public/assets-amb
+/public/files/
+/public/api/files/
+/vendor/composer/vendor/
+/vendor/composer/composer.lock
+/vendor/default/composer/vendor/
+/vendor/default/composer/composer.lock
+/fw
+/dev/http-client.env.json

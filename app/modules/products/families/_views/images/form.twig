@@ -1,0 +1,38 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ ModuleUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd }}"/>
+    <input name="BrandID" type="hidden" >
+    <input name="BFamilyID" type="hidden" >
+
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="form-label" for="BFImageFile">Imagen</label>
+            <input type="file" name="BFImageFile" id="BFImageFile" class="form-control-file" data-rule-required="true">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="form-label">Descripción</label>
+            <input type="text" name="BFImageDescription" id="BFImageDescription" class="form-control" />
+        </div>
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+
+    <div class="pull-right">
+
+        <button type="button" class="btn" onclick="BN.WinClose();">Cancelar</button>
+        <button class="btn btn-primary" form="{{ FormID }}" type="submit">Agregar</button>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+</script>

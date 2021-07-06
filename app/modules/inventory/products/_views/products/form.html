@@ -1,0 +1,252 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="--ModuleUrl--" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" id="cmd" value="new_add"/>
+    <input name="ProductID" type="hidden" >
+
+
+    <div class="form-group">
+        <div class="col-sm-6"><label class="small">SKU</label></div>
+        <div class="col-sm-6"><label class="small">N&uacute;mero de Parte</label></div>
+        <div class="clearfix"></div>
+        <div class="col-sm-6"><input type="text" name="ProductCode"  class="form-control" ></div>
+        <div class="col-sm-6"><input type="text" name="ProductPart" class="form-control" ></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-12"><label class="small">Nombre</label></div>
+        <div class="col-sm-12"><input type="text" name="ProductName" class="form-control" ></div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-4"><label class="small">Marca</label></div>
+        <div class="col-sm-8"><label class="small">Categor&iacute;a</label></div>
+        <div class="col-sm-4"><select name="BrandID"  class="form-control" ></select></div>
+        <div class="col-sm-8"><select name="CategoryID" class="form-control" ></select></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-12"><label class="small">Descripci&oacute;n</label></div>
+        <div class="col-sm-12"><textarea name="ProductDescription" class="form-control" ></textarea></div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-sm-3"><label class="small">Cantidad por Empaque</label></div>
+        <div class="clearfix"></div>
+        <div class="col-sm-3"><input type="text" name="ProductQtyPP" class="form-control" ></div>
+
+    </div>
+
+
+    <div class="clearfix"></div>
+    <div class="hrlabel" style=""><span class="white">Marca - Opciones</span></div>
+    <div class="clearfix"></div>
+
+    <div class="form-group" id="item-family">
+        <div class="col-sm-12"><label class="small">Familia</label></div>
+        <div class="col-sm-12"><select name="BFamilyID" class="form-control" ></select></div>
+    </div>
+    <div class="form-group" id="item-family-options">
+
+
+        <!--
+        <div class="col-sm-2"><label class="small">Cant. Min</label></div>
+        <div class="col-sm-2"><label class="small">Cant. M&aacute;x</label></div>
+        <div class="clearfix"></div>
+
+        <div class="col-sm-2"><input type="text" name="ProductQTYTier_Min" class="form-control" data-rule-number="true" ></div>
+        <div class="col-sm-2"><input type="text" name="ProductQTYTier_Max" class="form-control" data-rule-number="true" ></div>
+        -->
+
+
+
+    </div>
+
+
+    <div class="clearfix"></div>
+    <div class="hrlabel" style=""><span class="white">SAT</span></div>
+    <div class="clearfix"></div>
+
+    <div class="form-group">
+        <div class="col-sm-12"><label class="small">SAT - Producto</label></div>
+        <div class="col-sm-12"><input type="hidden" name="SATProductID" class="form-control" /></div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-6"><label class="small">SAT - Unidad</label></div>
+        <div class="col-sm-6"><label class="small">SAT - Impuestos Trasladados</label></div>
+        <div class="col-sm-6"><input type="hidden" name="SATUnitID" class="form-control" /></div>
+        <div class="col-sm-6"><select name="SATTaxRef" class="form-control" ></select></div>
+
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-sm-12"><label class="small" for="ProductDisabled">Deshabilitado</label></div>
+        <div class="col-sm-12"><input type="checkbox" name="ProductDisabled" id="ProductDisabled" value="1" ></div>
+
+
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">Aceptar</button>
+</div>
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}', {ltype: 'full-modal'});
+
+    function select_brand(BrandID, PopulateData)
+    {
+        let FormID = '{{ FormID }}';
+        PopulateData = $.extend(!0, {}, PopulateData);
+
+        BN.Route('{{ ModuleUrl }}', {cmd:'select_brand', BrandID: BrandID, FormID: FormID, PopulateData: JSON.stringify(PopulateData)}, {}, function (data) {
+
+            if (!data || (data && !data.hasOwnProperty('FormID')) || (data && !data.hasOwnProperty('BrandID')))
+            {
+                $(jqselect(FormID, 'BFamilyID')).html('');
+                $(jqselect(FormID, 'BFamilyID')).select2({val: ''});
+
+                return null;
+            }
+
+            $(jqselect(FormID, 'BFamilyID')).html(data.families);
+            $(jqselect(FormID, 'BFamilyID')).select2({val: ''});
+
+            if (PopulateData && PopulateData.hasOwnProperty('BFamilyID'))
+            {
+                console.log('fam', PopulateData.BFamilyID);
+                $(jqselect(FormID, 'BFamilyID')).val(PopulateData.BFamilyID).trigger('change');
+                select_family(BrandID, PopulateData.BFamilyID, PopulateData)
+            }
+
+
+        });
+    }
+
+    function select_family(BrandID, BFamilyID, PopulateData)
+    {
+        let FormID = '{{ FormID }}';
+        PopulateData = $.extend(!0, {}, PopulateData);
+
+        BN.Route('{{ ModuleUrl }}', {cmd:'select_family', BrandID: BrandID, BFamilyID: BFamilyID, FormID: FormID, PopulateData: JSON.stringify(PopulateData)}, {}, function (data) {
+
+            if (!data || (data && !data.hasOwnProperty('FormID')) || (data && !data.hasOwnProperty('BFamilyID')))
+            {
+                $('#item-family-options').html('')
+                $('#item-family-options').addClass('hidden')
+
+                return null;
+            }
+
+            $('#item-family-options').removeClass('hidden')
+            $('#item-family-options').html(data.options);
+
+
+
+            if (PopulateData && PopulateData.hasOwnProperty('BFamilyData'))
+            {
+                for (const ParamKey in PopulateData.BFamilyData)
+                {
+
+                    if ($("#PFamilyData_" + ParamKey).length > 0)
+                    {
+                        const item = $("#PFamilyData_" + ParamKey);
+                        const value = PopulateData.BFamilyData[ParamKey];
+
+                        if (item.is('input') && item.attr('type') === 'text')
+                        {
+                            item.val(value);
+                        }
+                        else if (item.is('select'))
+                        {
+                            item.val(value).trigger('change');
+                        }
+
+
+                    }
+
+                }
+
+            }
+
+
+        });
+
+    }
+
+    $(jqselect('{{ FormID }}', 'BrandID')).on('change', function ()
+    {
+
+        select_brand($(this).val());
+
+    });
+
+
+    $(jqselect('{{ FormID }}', 'BFamilyID')).on('change', function ()
+    {
+
+        select_family($(jqselect('{{ FormID }}', 'BrandID')).val(), $(this).val());
+
+    });
+
+
+
+    $('#{{ FormID }} select[name=CategoryID]').on('change', function ()
+    {
+        if ($(this).val() == '_new_')
+        {
+            BN.Route('{{ ModuleUrl }}categories', {cmd:'new', CallerForm: '{{ FormID }}', CallerFormField: 'CategoryID'});
+        }
+
+    });
+
+    $(jqselect('{{ FormID }}', 'SATProductID')).select2(
+        {
+            minimumInputLength: 3,
+            dropdownCssClass: "bigdrop",
+            allowClear: true,
+            ajax: {
+                url: '{{ ModuleUrl }}',
+                dataType: 'json',
+                type: "POST",
+                quietMillis: 50,
+                data: function (query) {
+                    return {cmd:'sat_products', q:query};
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {text: item.label, id: item.id, fname: item.fname, lname: item.lname}
+                        })
+                    }
+                }
+            }
+        });
+    $(jqselect('{{ FormID }}', 'SATUnitID')).select2(
+        {
+            minimumInputLength: 3,
+            dropdownCssClass: "bigdrop",
+            allowClear: true,
+            ajax: {
+                url: '{{ ModuleUrl }}',
+                dataType: 'json',
+                type: "POST",
+                quietMillis: 50,
+                data: function (query) {
+                    return {cmd:'sat_units', q:query};
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {text: item.label, id: item.id, fname: item.fname, lname: item.lname}
+                        })
+                    }
+                }
+            }
+        });
+
+</script>

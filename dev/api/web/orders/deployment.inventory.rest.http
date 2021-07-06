@@ -1,0 +1,11 @@
+POST {{ endpoint }}/web/orders/deployment
+Authorization: Bearer {{ apikey }}
+Content-Type: application/json
+
+{
+  "cmd" : "inventory",
+  "WOrderID": "57"
+
+}
+
+

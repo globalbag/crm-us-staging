@@ -1,0 +1,117 @@
+<div class="display-options d-flex justify-content-between" id="customer-content">
+    <div class="left">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class=""><a href="#customer-content-gdata" aria-controls="customer-content-gdata" role="tab" data-toggle="tab">Datos Generales</a></li>
+{#            <li role="presentation" class=""><a href="#customer-content-bdata" aria-controls="customer-content-bdata" role="tab" data-toggle="tab">Datos Fiscales</a></li>#}
+            <li role="presentation" class=""><a href="#customer-content-sdata" aria-controls="customer-content-sdata" role="tab" data-toggle="tab">Datos de Envio</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="customer-content-gdata">
+        <div class="form-group col-xs-12">
+            <label>Nombre</label>
+            <p class="form-control-static">{{ WOrder.WOrderContactFullName|raw|default('(empty)') }}</p>
+        </div>
+        <div class="form-group col-xs-12">
+            <label>Compañía</label>
+            <p class="form-control-static">{{ WOrder.WOrderContactLegalName|raw|default('(empty)') }}</p>
+        </div>
+        <div class="form-group col-xs-6">
+            <label>Teléfono</label>
+            <p class="form-control-static">{{ WOrder.WOrderContactPhone|raw|default('(empty)') }}</p>
+        </div>
+        <div class="form-group  col-xs-6">
+            <label>Email</label>
+            <p class="form-control-static">{{ WOrder.WOrderContactEmail|raw|default('(empty)')|default('(empty)') }}</p>
+        </div>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="customer-content-bdata">
+
+        {% if WOrder.WOrderContactRFC %}
+        <div class="form-group col-xs-12">
+            <label>Nombre / Razón Social</label>
+            <p class="form-control-static">{{ WOrder.WOrderContactLegalName|raw|default('(empty)')|default('(empty)') }}</p>
+        </div>
+        <div class="form-group col-xs-12">
+            <label>RFC</label>
+            <p class="form-control-static">{{ WOrder.WOrderContactRFC|raw|default('(empty)') }}</p>
+        </div>
+        <div class="form-group col-xs-12">
+            <label>Dirección Fiscal</label>
+            <p class="form-control-static">
+                {{ WOrder.WOrderAddressStreet|raw|default('(empty)') }}
+                {{ WOrder.WOrderAddressNumber|ifexist(' ')|raw|default('(empty)') }}
+                {{ WOrder.WOrderAddressIntNumber|ifexist(' ')|raw|default('(empty)') }}
+                Col. {{ WOrder.WOrderAddressNeighborhood|raw|default('(empty)') }},
+                {{ WOrder.WOrderAddressCity|raw|default('(empty)') }},
+                {{ WOrder.WOrderAddressStateName|raw|default('(empty)') }},
+                C.P. {{ WOrder.WOrderAddressZipCode|raw|default('(empty)') }}</p>
+        </div>
+        <div class="form-group col-xs-12">
+            <label>Uso CFDI</label>
+            <p class="form-control-static">{{ invoice_category.name|raw|default('(empty)') }}</p>
+        </div>
+        {% else %}
+            <div class="alert alert-warning">No requiere factura.</div>
+        {% endif %}
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="customer-content-sdata">
+
+
+        <div class="form-group col-xs-6">
+            <label>Contacto</label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingContactName|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label>Teléfono</label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingContactPhone|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-12">
+            <label>Dirección</label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingAddress|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label>Colonia</label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingAddressNeighborhood|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label>Ciudad</label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingAddressCity|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label>Estado </label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingAddressStateName|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-6">
+            <label>Código Postal </label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingAddressZipCode|raw|default('(empty)') }}</p>
+        </div>
+
+        <div class="form-group col-xs-12">
+            <label>Referencia </label>
+            <p class="form-control-static">{{ WOrder.WOrderShippingReference|raw|default('(empty)') }}</p>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    function customers_view_tab(tab_id)
+    {
+        $(`#customer-content a[aria-controls=customer-content-${tab_id}]`).tab('show');
+    }
+    customers_view_tab('gdata');
+    //$("#customer-content a").click(function (e) { e.preventDefault(); $(this).tab('show'); });
+</script>

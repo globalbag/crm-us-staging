@@ -1,0 +1,35 @@
+<form action="{{ ModuleUrl }}" method="post" name="{{ FormID }}" id="{{ FormID }}" autocomplete="off">
+    <input type="hidden" name="cmd" value="cancel_save"/>
+    <input type="hidden" name="WOrderID" value="{{ WOrderID }}">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="control-label">Motivo de Cancelaci&oacute;n</label>
+            <select name="CancelReason" class="form-control">
+                <option value="">-</option>
+                {{ WOrderCancelReasons|raw }}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="control-label">Comentarios</label>
+            <textarea rows="5" class="form-control" name="CancelComment" data-rule-requered="true"></textarea>
+        </div>
+    </div>
+
+</form>
+
+<div class="BNBottomMenu">
+    <div class="pull-right">
+        <button class="btn btn-outline" onclick="BN.WinClose(); return false;">Cerrar</button>
+        <button class="btn btn-primary" id="ActionButton" type="submit" form="{{ FormID }}" >Cancelar Orden</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+</script>

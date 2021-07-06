@@ -1,0 +1,153 @@
+{{ top_menu|raw }}
+
+<section>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Datos del Cliente
+                </div>
+                <div class="panel-body" id="CSpot_gdata">
+                    {{ content.gdata|raw }}
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">Conceptos</div>
+                    <div class="pull-right">
+                        {% if WOrderInfo.WOrderStatus != order_status.success %}
+                            <a class="btn btn-xs btn-default" href="javascript:void(0);" onclick="expenses_orders_items_new();" >Agregar Concepto</a>
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="CSpot_items">
+                    {{ content.items|raw }}
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">Seguimiento</div>
+                    <div class="pull-right">
+                        <a href="javascript:void(0);" onclick="expenses_orders_comments_new();"><i class="fa fa-plus"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="CSpot_comments" style="max-height: 350px; overflow-y: auto;">
+                    {{ content.comments|raw }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5">
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">Datos de la Orden</div>
+                    <div class="pull-right">
+                        {% if not OrderInfo.OrderClosed and OrderInfo.OrderStatus < order_status.cancelled  %}
+                            <a href="javascript:void(0);" onclick="expenses_orders_payments();" ><i class="fa fa-plus"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="CSpot_payment">
+                    {{ content.payments|raw }}
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">Pagos Aplicados</div>
+                    <div class="pull-right">
+                        {% if not OrderInfo.OrderClosed and OrderInfo.OrderStatus < order_status.cancelled  %}
+                            <a href="javascript:void(0);" onclick="expenses_orders_payments();" ><i class="fa fa-plus"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="CSpot_payment">
+                    {{ content.payments|raw }}
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">Pagos Reportados</div>
+                    <div class="pull-right">
+                        {% if not OrderInfo.OrderClosed and OrderInfo.OrderStatus < order_status.cancelled  %}
+                            <a href="javascript:void(0);" onclick="expenses_orders_payments();" ><i class="fa fa-plus"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body" id="CSpot_payment">
+                    {{ content.payments|raw }}
+                </div>
+            </div>
+
+
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">Comprobantes</div>
+                    <div class="pull-right">
+                        {% if not OrderInfo.OrderClosed and OrderInfo.OrderStatus < order_status.cancelled %}
+                            <!-- Single button -->
+                            <div class="btn-group">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-navicon"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="expenses_orders_invoices_xml_new();" ><i class="fa fa-plus"></i> Comprobante Fiscal</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" onclick="expenses_orders_invoices_pdf_new();" ><i class="fa fa-plus"></i> Recibo</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="clearfix"></div>
+                </div>
+
+
+
+                <div class="panel-body" id="CSpot_invoices">
+
+                    {{ content.invoices|raw }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<script type="text/javascript">
+
+    function web_order_cancel()
+    {
+        BN.Route('{{ ModuleUrl }}', {cmd:'cancel', WOrderID:'{{ WOrderID }}'});
+    }
+
+    function web_order_uncancel()
+    {
+        BN.Route('{{ ModuleUrl }}', {cmd:'uncancel', WOrderID:'{{ WOrderID }}'});
+    }
+
+</script>

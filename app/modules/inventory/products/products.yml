@@ -1,0 +1,56 @@
+# Views
+ViewInfo:
+            ViewName: Default
+            ViewDescription: Vista Predeterminada
+            ViewType: default
+            ViewVersion: 2
+            ViewPreset: 1
+            ViewFields:
+                    - ProductCode
+                    - ProductPart
+                    - ProductName
+                    - BrandID
+                    - CategoryID
+                    - PPricePrice
+                    - PPriceCurrency
+FieldsInfo:
+                    -
+                        id: ProductCode
+                        label: SKU
+                        filter-type: text
+                        view-width: 3%
+                        sort: true
+                    -
+                        id: ProductPart
+                        label: No. Parte
+                        filter-type: text
+                        view-width: 3%
+                        sort: true
+
+                    -
+                        id: ProductName
+                        label: Nombre
+                        sort: true
+                        filter-type: text
+                        view-width: 40%
+                    -
+                        id: BrandID
+                        label: Marca
+                        sort: true
+                        filter-type: text
+                        filter-field: BrandName
+                    -
+                        id: CategoryID
+                        label: Categor&iacute;a
+                        sort: true
+                        view-width: 10%
+                    -
+                        id: PPricePrice
+                        label: Precio Lista
+                        sort: true
+                        view-width: 10%
+                    -
+                        id: PPriceCurrency
+                        label: Moneda
+                        sort: true
+                        view-width: 10%

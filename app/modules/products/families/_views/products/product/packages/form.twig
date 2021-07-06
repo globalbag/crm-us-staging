@@ -1,0 +1,63 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ ModuleUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd }}"/>
+    <input name="BrandID" type="hidden" >
+    <input name="BFamilyID" type="hidden" >
+    <input name="ProductID" type="hidden" >
+    <input name="PPackageID" type="hidden" >
+
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="PPackageName" id="PPackageName" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <label class="form-label">Descripci&oacute;n</label>
+            <input type="text" name="PPackageDescription" id="PPackageDescription" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label class="form-label">Largo</label>
+            <input type="text" name="PPackageLength" id="PPackageLength" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <label class="form-label">Ancho</label>
+            <input type="text" name="PPackageWidth" id="PPackageWidth" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <label class="form-label">Altura</label>
+            <input type="text" name="PPackageHeight" id="PPackageHeight" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <label class="form-label">Peso</label>
+            <input type="text" name="PPackageWeight" id="PPackageWeight" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label class="form-label">No. Unidades</label>
+            <input type="text" name="PPackageUnitQty" id="PPackageUnitQty" class="form-control" />
+        </div>
+
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+
+    <div class="pull-right">
+
+        <button type="button" class="btn" onclick="BN.WinClose();">Cancelar</button>
+        <button class="btn btn-primary" form="{{ FormID }}" type="submit">Agregar</button>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+</script>

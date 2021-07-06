@@ -1,0 +1,47 @@
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <td class="text-center"><strong>Cnt.</strong></td>
+        <td class="text-left"><strong>Producto</strong></td>
+        <td class="text-left"><strong>Precio</strong></td>
+        <td class="text-left"><strong>Importe</strong></td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+    <!-- foreach ($order->lineItems as $line) or some such thing here -->
+    <tr>
+        <td class="text-center">{{ item.WOItemQty }}</td>
+        <td>{{ item.WOItemName|raw }}{% if item.ProductPartNumber %}<br><small><b>N&uacute;mero de parte:</b> {{ item.ProductPartNumber }}</small>{% endif %}</td>
+        <td class="text-left">{{ item.WOItemPriceUSD|money('', 'USD') }}</td>
+        <td class="text-left">{{ item.WOItemAmountUSD|money('', 'USD') }}</td>
+    </tr>
+    {%  endfor %}
+    <tr>
+        <td class="thick-line"></td>
+        <td class="thick-line"></td>
+        <td class="thick-line text-center"><strong>Subtotal</strong></td>
+        <td class="thick-line text-right">{{ WOrder.WOrderTotalAmount|money('', WOrder.WOrderCurrency) }}</td>
+    </tr>
+    <tr>
+        <td class="no-line"></td>
+        <td class="no-line"></td>
+        <td class="no-line text-center"><strong>IVA</strong></td>
+        <td class="no-line text-right">{{ WOrder.WOrderTotalTax|money('', WOrder.WOrderCurrency) }}</td>
+    </tr>
+    {% if WOrder.WOrderTotalShipping > 0 %}
+    <tr>
+        <td class="no-line"></td>
+        <td class="no-line"></td>
+        <td class="no-line text-center"><strong>Env&iacute;o</strong></td>
+        <td class="no-line text-right">{{ WOrder.WOrderTotalShipping|money('', WOrder.WOrderCurrency) }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td class="no-line"></td>
+        <td class="no-line"></td>
+        <td class="no-line text-center"><strong>Total</strong></td>
+        <td class="no-line text-right">{{ WOrder.WOrderTotalTotal|money('', WOrder.WOrderCurrency) }}</td>
+    </tr>
+    </tbody>
+</table>

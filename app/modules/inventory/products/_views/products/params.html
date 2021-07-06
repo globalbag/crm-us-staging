@@ -1,0 +1,25 @@
+{% for param_info in params %}
+
+    {% if param_info.BParamType == 'text' or param_info.BParamType == 'select' %}
+<div class="col-sm-12"><label class="small" for="PFamilyData_{{ param_info.BParamCode }}">{{ param_info.BParamName|raw }}{% if param_info.BParamComment %} <small>({{ param_info.BParamComment|raw }})</small>{% endif %}</label></div>
+        <div class="col-sm-6">
+            {% if param_info.BParamType == 'text' %}
+            <input type="text" name="PFamilyData[{{ param_info.BParamCode }}]" id="PFamilyData_{{ param_info.BParamCode }}" class="form-control" >
+            {% elseif param_info.BParamType == 'select' %}
+            <select name="PFamilyData[{{ param_info.BParamCode }}]"id="PFamilyData_{{ param_info.BParamCode }}" class="form-control" >
+                <option value="">-</option>
+                {% for data in param_info.BParamData %}
+                {{ dump(data) }}
+                <option value="{{ data.id }}">{{ data.name|raw }}</option>
+                {% endfor %}
+            </select>
+            <script>
+                $('#PFamilyData_{{ param_info.BParamCode }}').select2();
+                console.log('script', '#PFamilyData_{{ param_info.BParamCode }}');
+            </script>
+            {% endif %}
+        </div>
+        <div class="clearfix"></div>
+    {% endif %}
+
+{% endfor %}

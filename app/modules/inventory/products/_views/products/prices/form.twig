@@ -1,0 +1,28 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd }}"/>
+    <input type="hidden" name="ProductID" value="{{ ProductID }}" >
+    <input type="hidden" name="PPriceID">
+
+
+    <div class="form-group">
+        <div class="col-sm-2"><label class="small">Vol. Min</label></div>
+        <div class="col-sm-2"><label class="small">Vol. Max</label></div>
+        <div class="col-sm-4"><label class="small">Precio</label></div>
+        <div class="col-sm-4"><label class="small">Moneda</label></div>
+        <div class="clearfix"></div>
+        <div class="col-sm-2"><input type="text" name="PPriceVolMin"  class="form-control"  data-required="true"></div>
+        <div class="col-sm-2"><input type="text" name="PPriceVolMax"  class="form-control" ></div>
+        <div class="col-sm-4"><input type="text" name="PPricePrice" class="form-control" data-required="true" ></div>
+        <div class="col-sm-4"><select name="PPriceCurrencyID" class="form-control"  data-required="true"></select></div>
+
+    </div>
+
+</form>
+<template class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.Route('{{ ModuleUrl|raw }}', {cmd: 'prices', ProductID: '{{ ProductID }}'});">Cancelar</button>
+    <button class="btn btn-primary" form="{{ FormID }}" type="submit">{% if cmd == 'prices_new_add '%}Agregar{% else %}Guardar{% endif %}</button>
+</template>
+
+<script>
+    BN.Form('{{ FormID }}', {ltype: 'full-modal'});
+</script>

@@ -1,0 +1,95 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ ModuleUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd }}"/>
+    <input name="BrandID" type="hidden" >
+    <input name="BParamID" type="hidden" >
+
+
+    <div class="form-group row">
+        <div class="col-sm-7">
+            <label class="form-label">Nombre</label>
+            <input name="BParamName" class="form-control" data-rule-required="true">
+        </div>
+        <div class="col-sm-3">
+            <label class="form-label">Alias</label>
+            <input name="BParamCode" class="form-control" data-rule-required="true">
+        </div>
+        <div class="col-sm-2">
+            <label class="form-label">Tipo</label>
+            <select name="BParamType" class="form-control" data-rule-required="true"></select>
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <div class="col-sm-12">
+            <label class="form-label">Comentario</label>
+            <input name="BParamComment" class="form-control" data-rule-required="true">
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="form-label">Data (json)</label>
+        </div>
+
+        <div class="col-sm-12">
+            <textarea id="BParamData" name="BParamData" class="form-control" rows="10"></textarea>
+        </div>
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+
+    {% if BParamID %}
+        <div class="pull-left">
+            <button type="button" class="btn btn-danger" onclick="BN.Route('', {cmd: 'params_delete', BrandID: '{{ BrandID }}', BParamID: '{{ BParamID }}'});">Eliminar</button>
+        </div>
+    {% endif %}
+    <div class="pull-right">
+
+        <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+        <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">{% if BParamID %}Guardar{%  else %}Agregar{% endif %}</button>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+
+    var editor_codemirror = CodeMirror.fromTextArea(document.getElementById('BParamData'), {
+        mode: "application/json",
+        value: document.documentElement.innerHTML,
+        lineNumbers: true,
+        lineWrapping: true,
+        theme: "rubyblue",
+        extraKeys: customExtraKeys,
+    });
+
+    function load_codemirror()
+    {
+        setTimeout(function(){
+
+            var BParamData = $(jqselect('{{ FormID }}', 'BParamData')).val();
+
+            editor_codemirror.getDoc().setValue(BParamData);
+
+            $(jqselect('{{ FormID }}', 'BParamData')).val(editor_codemirror.getValue());
+
+        }, 500);
+
+
+
+    };
+
+    BN.Form('{{ FormID }}', {before:function(){
+
+            $(jqselect('{{ FormID }}', 'BParamData')).val($.base64.encode(editor_codemirror.getValue()));
+
+            return true;
+
+        } });
+
+</script>

@@ -1,0 +1,10 @@
+POST {{ endpoint }}/account/preset
+Authorization: Bearer {{ apikey }}
+Content-Type: application/json
+
+{
+  "WUserID" : "4",
+  "Token": "111111"
+}
+
+

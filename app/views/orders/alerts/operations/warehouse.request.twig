@@ -1,0 +1,45 @@
+<subject>New Order #{{ Order.WOrderID }}</subject>
+
+<strong><a target="_blank" href="{{ Url }}">Order No. {{ Order.WOrderID }} </a>:</strong><br><br>
+
+<table style="text-align: left; width:100%">
+    <thead>
+    <tr>
+        <th>Qty</th>
+        <th>Product Name</th>
+        <th>Product Code</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for Item in Items %}
+        <tr>
+            <td>{{ Item.WOItemQty }}</td>
+            <td>{{ Item.WOItemName}} </td>
+            <td>{{ Item.ProductCode}} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br><br>
+
+<strong>Shipping Contact: </strong>
+<p>{{ Order.WOrderShippingContactName }}<br>
+    {{ Order.WOrderShippingContactPhone }}<br>
+</p>
+<p>
+    <strong>Shipping Address: </strong>
+    {{ Order.WOrderShippingAddress }}<br>
+    {{ Order.WOrderShippingAddress2 }}<br>
+    {{ Order.WOrderShippingAddressCity }}<br>
+    {{ Order.WOrderShippingAddressZipCode }}<br>
+    {{ Order.WOrderShippingAddressCountryName }}<br>
+</p>
+
+
+<br>
+
+<p>
+    Global Bag.
+
+</p>

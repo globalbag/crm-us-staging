@@ -1,0 +1,28 @@
+<form name="{{ FormID }}" id="{{ FormID }}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ ModuleUrl }}" autocomplete="off">
+
+    <input type="hidden" name="cmd" value="new_add">
+    <input type="hidden" name="WOrderID" value="{{ WOrder.WOrderID }}">
+
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="order_etc" class="small control-label">Archivo XML</label>
+            <input type="file" class="form-control"  name="InvoiceXML"/>
+        </div>
+        <div class="col-sm-6">
+            <label for="order_amount" class="small control-label">Archivo PDF</label>
+            <input type="file" class="form-control"  name="InvoicePDF" />
+        </div>
+    </div>
+
+    <div class="BNBottomMenu">
+        <div class="pull-right">
+            <button class="btn btn-default" onclick="BN.WinClose(); return false;">Cerrar</button>
+            <button class="btn btn-primary" form="{{ FormID }}">Agregar Factura</button>
+        </div>
+    </div>
+
+</form>
+<script>
+    BN_Forms.init('{{ FormID }}');
+</script>

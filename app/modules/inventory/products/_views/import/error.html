@@ -1,0 +1,36 @@
+    <div class="bg-warning" style="padding: 10px;">El archivo contiene errores. No es posible continuar.</div>
+
+
+<div style="max-height: 300px; overflow-x: auto">
+    <table class="table table-striped">
+        <thead>
+            <th width="10%">Campo</th>
+            <th width="80%">Comentario</th>
+            <th width="10%">L&iacute;nea</th>
+        </thead>
+        <tbody>
+
+        {% for ErrorInfo in ErrorList %}
+
+        <tr>
+            <td>{{ FieldNames[ErrorInfo.field]|raw }}</td>
+            <td>{{ Alerts[ErrorInfo.type]|default(ErrorInfo.type|raw)|raw }}</td>
+            <td>{{ ErrorInfo.line }}</td>
+
+        </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+
+<div class="BNBottomMenu">
+
+    <div class="pull-right">
+        <button class="btn btn-default" onclick="BN.WinClose(); return false;" type="button">Cerrar</button>
+    </div>
+
+</div>

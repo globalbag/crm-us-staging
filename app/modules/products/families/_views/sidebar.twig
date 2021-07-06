@@ -1,0 +1,7 @@
+<h4>{{ BFamilyInfo.BFamilyName|raw }}</h4>
+<br>
+Alias: <strong class="text-info">{{ BFamilyInfo.BFamilyCode|raw }}</strong>
+<br>
+Público: <strong class="text-info">{%  if BFamilyInfo.BFamilyPublished %}Si{% else %}No{% endif %}</strong>
+<br>
+Orden: {{ BFamilyInfo.RowOrder }}

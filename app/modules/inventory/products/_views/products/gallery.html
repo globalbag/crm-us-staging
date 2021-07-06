@@ -1,0 +1,61 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ModuleUrl}}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" id="cmd" value="{{ cmd }}"/>
+    <input name="ProductID" type="hidden" value="{{ ProductID }}">
+
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="form-label">Im&aacute;genes</label><br>
+
+            <style>
+                .img-wrap {
+                    position: relative;
+                    height: 100px;
+                }
+                .img-wrap .close {
+                    position: absolute;
+                    top: 2px;
+                    right: 2px;
+                    z-index: 100;
+                }
+            </style>
+            {%  for id, image in ProductGallery  %}
+            <div class="col-md-2 col-sm-2 img-wrap" id="image_{{ id }}">
+                <span class="close remove" onclick="remove({{ id }})">&times;</span>
+                <a target="_blank" href="{{ image }}"><img  class="img-fluid col-md-12 col-xs-12 col-lg-12 col-sm-12" src="{{ image }}"></a>
+            </div>
+
+            <input  id="image_{{ id }}_input" hidden type="text" name="images[]" value="{{ image }}">
+            {% endfor %}
+
+            {% if ProductGallery %}
+            <br><br><br><br><br>
+            {%  endif %}
+
+            <input type="file" name="ProductImage" class="form-control" >
+        </div>
+
+
+    </div>
+
+
+
+</form>
+
+<div class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">Aceptar</button>
+</div>
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+
+    function remove(image_id)
+    {
+        $('#image_'+image_id).hide();
+        $('#image_'+image_id+'_input').attr('disabled', true);
+    }
+
+</script>

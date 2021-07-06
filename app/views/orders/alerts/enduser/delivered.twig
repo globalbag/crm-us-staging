@@ -1,0 +1,40 @@
+<subject> Delivered Order # {{ Order.WOrderID }}</subject>
+<body>
+<h3>Hello, {{ Order.WOrderContactFullName }}!</h3>
+
+<p>Your Order ( <a target="_blank" href="{{ Url }}">Order No. {{ Order.WOrderID }} </a>). Has been delivered:<br>
+
+<table style="text-align: left; width:100%">
+    <thead>
+    <tr>
+        <th>Qty</th>
+        <th>Product</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for Item in Items %}
+        <tr>
+            <td>{{ Item.WOItemQty }}</td>
+            <td>{{ Item.WOItemName}} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+
+<p><strong>Shipping Address:</strong><br>
+    {{ Order.WOrderShippingAddress }}<br>
+    {{ Order.WOrderShippingAddressNeighborhood }} {% if Order.WOrderShippingAddressNeighborhood %} <br> {% endif %}
+    {{ Order.WOrderShippingAddressCity }}, {{ Order.WOrderShippingAddressStateName }}<br>
+    {{ Order.WOrderShippingAddressZipCode }}
+</p><br>
+
+
+<p>
+    Cheers,<br>
+    Global Bag
+
+</p>
+
+</body>

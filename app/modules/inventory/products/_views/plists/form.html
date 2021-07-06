@@ -1,0 +1,32 @@
+<form id="--FormID--" name="--FormID--" class="form-horizontal" action="--ModuleUrl--" method="post">
+    <input type="hidden" name="cmd" id="cmd" value="new_add"/>
+    <input name="PListID" type="hidden" >
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="PListName">Nombre</label>
+        <div class="col-xs-10">
+            <input id="PListName" name="PListName" type="text" class="form-control" data-rule-required="true" autofocus>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="PListName">Default</label>
+        <div class="col-xs-10">
+            <input id="PListDefault" name="PListDefault" type="checkbox"   value="1">
+        </div>
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    <button class="btn btn-primary" id="ActionButton" form="--FormID--" type="submit">Aceptar</button>
+</div>
+
+
+<script type="text/javascript">
+    <!--
+
+    BN.Form('--FormID--', {ltype: 'full-modal'});
+
+    -->
+</script>

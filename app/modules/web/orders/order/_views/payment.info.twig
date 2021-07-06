@@ -1,0 +1,110 @@
+<form name="{{ FormID }}" id="{{ FormID }}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ ModuleUrl }}" autocomplete="off">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">Fecha</label>
+            <p class="form-control-static">{{ payment_info.WOPaymentDate|date(dateFormat) }}</p>
+        </div>
+        <div class="col-sm-6">
+            <label class="small control-label">Monto</label>
+            <p class="form-control-static">{{ payment_info.WOPaymentAmount|money('', WOrder.WOrderCurrency) }}</p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">M&eacute;todo de Pago</label>
+            <p class="form-control-static">{{ payment_info.WOPaymentMethod|capitalize|raw }}</p>
+        </div>
+        <div class="col-sm-6">
+            <label class="small control-label">Status</label>
+            <p class="form-control-static">
+                {% for status_info in status_list %}
+
+                    {% if status_info.value == payment_info.WOPaymentStatus %}
+                        <span class="badge badge-dark" style="color: #FFF; background-color: {{ status_info.color }} !important;">{{ status_info.name|raw }}</span>
+                    {% endif %}
+
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+
+{#    -----#}
+
+    {% if  payment_details  %}
+        {% if payment_details.card %}
+            {% for card in payment_details.card  %}
+                <div class="form-group row">
+                <div class="col-sm-6">
+                    <label class="small control-label">Forma de Pago</label>
+                    <p class="form-control-static"> {{ card.type|capitalize }} Card </p>
+                </div>
+                <div class="col-sm-6">
+                    <label class="small control-label">Detalles</label>
+                    <p class="form-control-static">
+
+                        {% if card.brand == "visa" %}
+                            <img src="assets-amb/images/icons/cards/brand_visa.gif">
+                        {% else  %}
+                            <img src="assets-amb/images/icons/cards/brand_mc.gif">
+                        {% endif %}
+
+                        **** {{ card.last4 }}
+                        - {{ card.exp_month }}/{{ card.exp_year }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+
+        {% else %}
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label class="small control-label">Forma de Pago</label>
+                    <p class="form-control-static"> {{ payment_details.details|raw }} </p>
+                </div>
+                <div class="col-sm-6">
+                    <label class="small control-label">Detalles</label>
+                    <p class="form-control-static">
+                        {{ payment_details.payer.name|raw }}
+                        <br>
+                        {{ payment_details.payer.email|raw }}
+                    </p>
+                </div>
+            </div>
+
+        {% endif %}
+    {% endif %}
+
+
+
+
+    {% if payment_info.WOPaymentStatus == status_list.reject.value %}
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">Fecha de Cancelaci&oacute;n</label>
+            <p class="form-control-static">{{ payment_info.WOPaymentCancelInfo.Date|date(dateTimeFormat)|raw }}</p>
+        </div>
+        <div class="col-sm-6">
+            <label class="small control-label">Usuario de Cancelaci&oacute;n</label>
+            <p class="form-control-static">{{ reject_username|raw }}</p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="small control-label">Motivo de Cancelaci&oacute;n</label>
+            <p class="form-control-static">{{ payment_info.WOPaymentCancelInfo.Comment|raw }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="BNBottomMenu">
+        <div class="pull-right">
+            <button class="btn btn-default" onclick="BN.WinClose(); return false;">Cerrar</button>
+        </div>
+    </div>
+
+</form>

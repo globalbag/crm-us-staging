@@ -1,0 +1,19 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ ModuleUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="BrandID" >
+    <input type="hidden" name="BFamilyID" >
+    <input type="hidden" name="cmd"  value="content_save">
+
+    <textarea name="BFamilyContent" rows="10" style="width:100%"></textarea>
+
+</form>
+
+<template rel="actions">
+
+    <template rel="left">
+        <button class="btn btn-default" type="button" onclick="families_home(); return false;">Volver a Familias</button>
+    </template>
+
+    <template rel="right">
+        <button class="btn btn-primary" type="submit" form="{{ FormID }}" >Guardar</button>
+    </template>
+</template>

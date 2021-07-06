@@ -1,0 +1,61 @@
+<subject> Purchase Order # {{ Order.WOrderID }}</subject>
+<body>
+    <h3>Hello, {{ Order.WOrderContactFirstName }}!</h3>
+
+    <p>Thank you for your recent order on Global Bag ( <a target="_blank" href="{{ Url }}">Order No. {{ Order.WOrderID }} </a>). The items below have been added to your Global Bag´s order:</p>
+    <br>
+
+    <table style="text-align: left; width:100%">
+        <thead>
+        <tr>
+            <th>Qty</th>
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th>TotalPrice</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for Item in Items %}
+            <tr>
+                <td>{{ Item.WOItemQty }}</td>
+                <td>{{ Item.WOItemName}} </td>
+                <td>$ {{ Item.WOItemPriceUSD }}</td>
+                <td>$ {{ Item.WOItemTotalUSD }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+    <div style="float: right; width: 100%;">
+        <table style="text-align: right; width:100%;">
+            <tr>
+                <th style="width: 80%">Subtotal</th>
+                <td>$ {{ Order.WOrderTotalAmount }}</td>
+            </tr>
+            <tr>
+                <th>Shipping</th>
+                <td>$ {{ Order.WOrderShippingAmount }}</td>
+            </tr>
+            <tr>
+                <th>Tax</th>
+                <td>$ {{ Order.WOrderTotalShipping }}</td>
+            </tr>
+            <tr>
+                <th>Order Total</th>
+                <td>$ {{ Order.WOrderTotalTotal }}</td>
+            </tr>
+        </table>
+    </div>
+
+<p>
+    Cheers,<br>
+    Global Bag
+
+</p>
+
+</body>
+
+
+

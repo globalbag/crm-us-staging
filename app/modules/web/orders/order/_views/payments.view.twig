@@ -1,0 +1,156 @@
+{% if payment_list %}
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <td class="text-left"><strong>Fecha</strong></td>
+        <td class="text-left"><strong>Método</strong></td>
+        <td class="text-left"><strong>Forma Pago</strong></td>
+        <td class="text-left"><strong>Gateway ID</strong></td>
+        <td class="text-left"><strong>Importe Pago</strong></td>
+        <td class="text-left"><strong>Status</strong></td>
+        <td class="text-left">&nbsp;</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% set WOrderTotalPayments = 0 %}
+
+    {% for payment_info in payment_list %}
+
+        {%set WOrderTotalPayments = WOrderTotalPayments + payment_info.WOPaymentAmount %}
+        <tr>
+{#            <td class="text-center"><strong><a href="javascript:void(0);" onclick="web_order_payment_view('{{ payment_info.WOPaymentID }}'); return false;"><i class="fa fa-file"></i></a></strong></td>#}
+            <td class="text-left">{{ payment_info.WOPaymentDate|date(dateFormat) }}</td>
+            <td class="text-left">{{ payment_info.WOPaymentMethod|capitalize }}</td>
+            <td class="text-left">
+                {% if payment_info.PaymentMethodInfo.type == "Card" %}
+                    {% if payment_info.PaymentMethodInfo.brand == "visa" %}
+                        <img src="assets-amb/images/icons/cards/brand_visa.gif">
+                    {% else  %}
+                        <img src="assets-amb/images/icons/cards/brand_mc.gif">
+                    {% endif %}
+                {% endif %}
+
+                {{ payment_info.PaymentMethodInfo.details }}
+
+            </td>
+            <td class="text-left">
+                {{ payment_info.PaymentMethodInfo.id }}
+            </td>
+            <td class="text-left">{{ payment_info.WOPaymentAmount|money('', WOrder.WOrderCurrency) }}</td>
+            <td class="text-left">
+                {% for status_info in status_list %}
+
+                    {% if status_info.value == payment_info.WOPaymentStatus %}
+                    <span class="badge badge-dark" style="color: #FFF; background-color: {{ status_info.color }} !important;">{{ status_info.name_en|trans }}</span>
+                    {% endif %}
+
+                {% endfor %}
+
+            </td>
+            <td class="text-left">
+
+                {% if WOrder.WOrderStatus != order_status_list.cancelled.value %}
+                <ul class="list-inline actions">
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                            {% if payment_info.WOPaymentStatus != status_list.reject.value %}
+                                    {% if payment_info.WOPaymentStatus == status_list.pending.value %}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_success('{{ payment_info.WOPaymentID }}'); return false;">Aprobar</a></li>#}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_reject('{{ payment_info.WOPaymentID }}'); return false;">Rechazar</a></li>#}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_info('{{ payment_info.WOPaymentID }}'); return false;">Detalles</a></li>#}
+{#                                        <hr style="margin: 10px 10px">#}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_delete('{{ payment_info.WOPaymentID }}'); return false;">Eliminar</a></li>#}
+{#                                    {% else %}#}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_reject('{{ payment_info.WOPaymentID }}'); return false;">Rechazar</a></li>#}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_cancel('{{ payment_info.WOPaymentID }}'); return false;">Cancel</a></li>#}
+{#                                        <li><a href="javascript:void(0);" onclick="web_order_payment_info('{{ payment_info.WOPaymentID }}'); return false;">Details</a></li>#}
+                                    {% endif %}
+{#                                <li><a href="javascript:void(0);" onclick="web_order_delivery_info('{{ delivery_info.WODeliveryID }}'); return false;">Detalles</a></li>#}
+                            {% else %}
+{#                                <li><a href="javascript:void(0);" onclick="web_order_payment_info('{{ payment_info.WOPaymentID }}'); return false;">Detalles</a></li>#}
+                            {% endif %}
+
+                                {% if payment_info.WOPaymentStatus != status_list.cancel.value and payment_info.WOPaymentStatus != status_list.reject.value %}
+                                <li><a href="javascript:void(0);" onclick="web_order_payment_reject('{{ payment_info.WOPaymentID }}'); return false;">Cancel</a></li>
+{#                                <li><a href="javascript:void(0);" onclick="web_order_payment_cancel('{{ payment_info.WOPaymentID }}'); return false;">Cancel</a></li>#}
+                                {% endif %}
+                                <li><a href="javascript:void(0);" onclick="web_order_payment_info('{{ payment_info.WOPaymentID }}'); return false;">Details</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                {% endif %}
+
+            </td>
+        </tr>
+    {%  endfor %}
+
+{#    <tr>#}
+{#        <td class="thick-line"></td>#}
+{#        <td class="thick-line"></td>#}
+{#        <td class="thick-line"></td>#}
+{#        <td class="thick-line"></td>#}
+{#        <td class="thick-line text-center"><strong>Pagos Recibidos</strong></td>#}
+{#        <td class="thick-line text-right">{{ WOrderTotalPayments|money('', WOrder.WOrderCurrency) }}</td>#}
+{#    </tr>#}
+    <tr>
+        <td class="no-line"></td>
+        <td class="no-line"></td>
+        <td class="no-line"></td>
+        <td class="no-line"></td>
+        <td class="no-line text-center"><strong>Aplicados</strong></td>
+        <td class="no-line text-right">{{ WOrder.WOrderTotalPayments|money('', WOrder.WOrderCurrency) }}</td>
+    </tr>
+    </tbody>
+</table>
+{% else %}
+    <div class="alert alert-warning"> No se encontraron pagos.</div>
+{#    <div class="alert alert-warning">Sin pagos recibidos. Presiona <a href="#" onclick="web_order_payment_new(); return false;">aquí</a> para agregar un pago.</div>#}
+{% endif %}
+
+<script>
+    function web_order_payment_new()
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'new'});
+    }
+
+    function web_order_payment_reject(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'reject', WOPaymentID: WOPaymentID});
+    }
+
+    function web_order_payment_success(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'success', WOPaymentID: WOPaymentID});
+    }
+
+    function web_order_payment_info(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'info', WOPaymentID: WOPaymentID});
+    }
+
+    function web_order_payment_view(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'view', WOPaymentID: WOPaymentID});
+    }
+
+    function web_order_payment_download(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'download', WOPaymentID: WOPaymentID});
+    }
+
+    function web_order_payment_delete(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'delete', WOPaymentID: WOPaymentID});
+    }
+
+    function web_order_payment_cancel(WOPaymentID)
+    {
+        BN.Route('{{ ModuleUrlRoot }}payments/', {WOrderID: '{{ WOrderID }}', cmd: 'cancel', WOPaymentID: WOPaymentID});
+    }
+
+</script>

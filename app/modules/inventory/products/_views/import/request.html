@@ -1,0 +1,32 @@
+<form name="{{ FormID }}" id="{{ FormID }}"  enctype="multipart/form-data" method="post" action="{{ ModuleUrl }}" class="form-horizontal">
+    <input type="hidden" name="cmd" value="associate" />
+
+    <div class="form-group">
+        <div class="col-sm-2"><strong>Archivo CSV</strong>: </div>
+        <div class="col-sm-10"><input type="file" name="ImportFile"></div>
+    </div>
+
+
+</form>
+
+
+<div class="BNBottomMenu">
+
+    <div class="pull-left">
+        <button class="btn btn-default btn-sm" type="button" onclick="location.href = '{{ ModuleUrl }}?cmd=layout';" >Descargar Layout</button>
+    </div>
+
+
+
+    <div class="pull-right">
+        <button class="btn btn-default" onclick="BN.WinClose(); return false;" type="button">Cerrar</button>
+        <button class="btn btn-primary" type="submit" form="{{ FormID }}" >Continuar</button>
+    </div>
+
+</div>
+
+<script>
+
+    BN.Form('{{ FormID }}', {ltype: 'full-modal'});
+
+</script>

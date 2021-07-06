@@ -1,0 +1,97 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ ModuleUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd }}"/>
+    <input name="BrandID" type="hidden" >
+    <input name="BFamilyID" type="hidden" >
+
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="form-label">Nombre</label>
+            <input name="BFamilyName" class="form-control" data-rule-required="true">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="form-label">Im&aacute;genes</label><br>
+
+                <style>
+                    .img-wrap {
+                        position: relative;
+                        height: 100px;
+                    }
+                    .img-wrap .close {
+                        position: absolute;
+                        top: 2px;
+                        right: 2px;
+                        z-index: 100;
+                    }
+                </style>
+                {%  for id, image in images_list  %}
+                    <div class="col-md-2 col-sm-2 img-wrap" id="image_{{ id }}">
+                        <span class="close remove" onclick="remove({{ id }})">&times;</span>
+                        <a target="_blank" href="{{ image }}"><img  class="img-fluid col-md-12 col-xs-12 col-lg-12 col-sm-12" src="{{ image }}"></a>
+                    </div>
+
+                    <input  id="image_{{ id }}_input" hidden type="text" name="images[]" value="{{ image }}">
+                {% endfor %}
+
+            {% if images_list %}
+            <br><br><br><br><br>
+            {%  endif %}
+
+            <input type="file" name="BFamilyImages" class="form-control">
+
+            </div>
+
+
+        </div>
+
+    <hr>
+
+
+    <div class="form-group row">
+
+        <div class="col-sm-12">
+            <label class="form-label">Par&aacute;metros</label>
+        </div>
+
+        {% for BParamInfo in param_list %}
+            <div class="col-sm-12">
+                <label><input type="checkbox" name="BFamilyParams[]" id="BFamilyParams_{{ BParamInfo.BParamID }}" value="{{ BParamInfo.BParamID }}" class="form-label" /> {{ BParamInfo.BParamName|raw }}</label>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+
+    {% if BFamilyID %}
+        <div class="pull-left">
+            <button type="button" class="btn btn-danger" onclick="BN.Route('', {cmd: 'params_delete', BrandID: '{{ BrandID }}', BFamilyID: '{{ BFamilyID }}'});">Eliminar</button>
+        </div>
+    {% endif %}
+    <div class="pull-right">
+
+        <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+        <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">{% if BFamilyID %}Guardar{%  else %}Agregar{% endif %}</button>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+    function remove(image_id)
+    {
+        $('#image_'+image_id).hide();
+        $('#image_'+image_id+'_input').attr('disabled', true);
+    }
+
+</script>

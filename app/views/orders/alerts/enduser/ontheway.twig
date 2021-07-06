@@ -1,0 +1,24 @@
+<subject> On Your Way, Order # {{ Order.WOrderID }}</subject>
+
+<body>
+<h3>Hello, {{ Order.WOrderContactFullName }}!</h3>
+
+<p>Your Order is on the way ( <a target="_blank" href="{{ Url }}">Order No. {{ Order.WOrderID }} </a>).</p>
+<p> Here's your UPS Tracking Code: <a target="_blank" href="https://www.ups.com/track?loc=en_US&requester=ST?trackingNumber={{ Order.WOrderShippingReference }}"> {{ Order.WOrderShippingReference }} </a></p>
+<br>
+
+<p><strong>Shipping Address:</strong><br>
+    {{ Order.WOrderShippingAddress }}<br>
+    {{ Order.WOrderShippingAddressNeighborhood }} {% if Order.WOrderShippingAddressNeighborhood %} <br> {% endif %}
+    {{ Order.WOrderShippingAddressCity }}, {{ Order.WOrderShippingAddressStateName }}<br>
+    {{ Order.WOrderShippingAddressZipCode }}
+</p><br>
+
+
+<p>
+    Cheers,<br>
+    Global Bag
+
+</p>
+
+</body>

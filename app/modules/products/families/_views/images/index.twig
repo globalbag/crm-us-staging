@@ -1,0 +1,116 @@
+<style>
+
+    .sorted_table tr {
+        cursor: pointer; }
+    .sorted_table tr.placeholder {
+        display: block;
+        background: red;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        border: none; }
+
+    .sorted_table tr.placeholder:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 5px solid transparent;
+        border-left-color: red;
+        margin-top: -5px;
+        left: -5px;
+        border-right: none; }
+
+
+    .sorted_head th {
+        cursor: pointer; }
+
+    .sorted_head th.placeholder {
+        display: block;
+        background: red;
+        position: relative;
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0; }
+
+    .sorted_head th.placeholder:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 5px solid transparent;
+        border-top-color: red;
+        top: -6px;
+        margin-left: -5px;
+        border-bottom: none; }
+
+</style>
+
+{% if table %}
+    {{ table|raw }}
+{% else %}
+    <div class="alert alert-warning">No existen resultados.</div>
+{% endif %}
+
+<template rel="actions">
+
+    <template rel="left">
+        <button class="btn btn-default" type="button" onclick="families_home(); return false;">Volver a Familias</button>
+    </template>
+
+    <template rel="right">
+        <button class="btn btn-primary" type="button" onclick="brand_families_images_new(); return false;">Agregar</button>
+    </template>
+
+</template>
+
+<script>
+
+    function brand_families_images_new() {
+        BN.Route('', {cmd: 'images_new', BrandID : '{{  BrandInfo.BrandID }}', BFamilyID: '{{ BFamilyInfo.BFamilyID }}'});
+    }
+
+    function brand_families_images_edit(BFImageID) {
+        BN.Route('', {cmd: 'images_edit', BrandID : '{{  BrandInfo.BrandID }}', BFamilyID: '{{ BFamilyInfo.BFamilyID }}', BFImageID: BFImageID});
+    }
+
+    function brand_families_images_default(BFImageID) {
+        BN.Route('', {cmd: 'images_default', BrandID : '{{  BrandInfo.BrandID }}', BFamilyID: '{{ BFamilyInfo.BFamilyID }}', BFImageID: BFImageID});
+    }
+
+    function brand_families_images_delete(BFImageID) {
+        BN.Route('', {cmd: 'images_delete', BrandID : '{{  BrandInfo.BrandID }}', BFamilyID: '{{ BFamilyInfo.BFamilyID }}', BFImageID: BFImageID});
+    }
+
+    if (parseInt('{{ total_items|default('0') }}') >= 2)
+    {
+
+        $('#{{ FormID }}_Table').sortable({
+            containerSelector: 'table',
+            itemPath: '> tbody',
+            itemSelector: 'tr',
+            placeholderClass: 'sort-placeholder',
+            placeholder: '<div class="sort-placeholder"/>',
+            handle: 'i.fa-sort',
+            onDrop: function($item, container, _super) {
+
+                var SortList = []
+
+                $('#{{ FormID }}_Table td[data-sort]').each(function ()
+                {
+                    SortList.push($(this).attr('data-sort'));
+                });
+
+                BN.Route('', {cmd: 'images_sort', BrandID : '{{  BrandInfo.BrandID }}', BFamilyID: '{{ BFamilyInfo.BFamilyID }}', items: $.base64.encode(JSON.stringify(SortList))});
+
+
+
+            }
+        });
+
+
+
+    }
+
+</script>

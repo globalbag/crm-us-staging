@@ -1,0 +1,22 @@
+<div class="text-left">
+
+        <a href="javascript:void(0);" onclick="view_pdf({{ WOrder.WOrderID }})">
+            <ul>
+                <li>
+                    Order No. {{ WOrder.WOrderID }}
+                </li>
+            </ul>
+        </a>
+
+
+</div>
+
+
+<script>
+
+    const view_pdf = (OrderID) =>
+    {
+        BN.Route('{{ ModuleUrl }}invoices', { cmd:'pdf_preview', WOrderID:OrderID } );
+    }
+
+</script>

@@ -1,0 +1,31 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ ModuleUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd|raw }}"/>
+    <input name="BrandID" type="hidden" >
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="BrandName">Nombre</label>
+        <div class="col-xs-10">
+            <input id="BrandName" name="BrandName" type="text" class="form-control" data-rule-required="true" autofocus>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="BrandCode">Alias</label>
+        <div class="col-xs-10">
+            <input id="BrandCode" name="BrandCode" type="text" class="form-control" data-rule-required="true" >
+        </div>
+    </div>
+
+</form>
+
+<div class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">{% if cmd == 'new_add' %}Agregar{% else %}Guardar{% endif %}</button>
+</div>
+
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+</script>

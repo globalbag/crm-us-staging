@@ -1,0 +1,34 @@
+<form name="{{ FormID }}" id="{{ FormID }}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ ModuleUrl }}" autocomplete="off">
+<input name="WODeliveryID" id="WODeliveryID" hidden value="{{ WODeliveryID }}">
+<input name="WOrderID"  hidden value="{{ WOrderID }}">
+<input name="cmd"  hidden value="{{ cmd }}">
+
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">Status</label>
+            <select class="form-control" name="WODeliveryStatus" id="WODeliveryStatus" required >
+
+
+            </select>
+        </div>
+        <div class="col-sm-6">
+            <label class="small control-label">Reference</label>
+            <input hidden name="WODeliveryTCode" id="WODeliveryTCode" required class="form-control">{{ delivery_info.WODeliveryTCode|raw }}</input>
+        </div>
+    </div>
+
+
+
+    <div class="BNBottomMenu">
+        <div class="pull-right">
+            <button class="btn btn-default" onclick="BN.WinClose(); return false;">Close</button>
+            <button class="btn btn-primary" form="{{ FormID }}">Save</button>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    BN.Form('{{ FormID }}');
+</script>

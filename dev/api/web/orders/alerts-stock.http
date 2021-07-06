@@ -1,0 +1,10 @@
+POST {{ endpoint }}/web/orders/stock
+Authorization: Bearer {{ apikey }}
+Content-Type: application/json
+
+{
+  "WUserID" : "115",
+  "ProductID": "17"
+}
+
+

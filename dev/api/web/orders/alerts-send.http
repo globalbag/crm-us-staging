@@ -1,0 +1,10 @@
+POST {{ endpoint }}/web/orders/alerts
+Authorization: Bearer {{ apikey }}
+Content-Type: application/json
+
+{
+  "WOrderID" : "57",
+  "AlertCode": "test.code"
+}
+
+

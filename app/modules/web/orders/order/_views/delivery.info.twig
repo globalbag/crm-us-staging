@@ -1,0 +1,79 @@
+<form name="{{ FormID }}" id="{{ FormID }}" class="form-horizontal" enctype="multipart/form-data" method="post" action="{{ ModuleUrl }}" autocomplete="off">
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">Fecha</label>
+            <p class="form-control-static">{{ delivery_info.WODeliveryDate|date(dateFormat) }}</p>
+        </div>
+        <div class="col-sm-6">
+            <label class="small control-label">Paqueter&iacute;a</label>
+            <p class="form-control-static">{{ delivery_info.WODeliveryCompany|raw }}</p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">Referencia</label>
+            <p class="form-control-static">{{ delivery_info.WODeliveryTCode|raw }}</p>
+        </div>
+        <div class="col-sm-6">
+            <label class="small control-label">Status</label>
+            <p class="form-control-static">
+                {% for status_info in status_list %}
+
+                    {% if status_info.value == delivery_info.WODeliveryStatus %}
+                        <span class="badge badge-dark" style="color: #FFF; background-color: {{ status_info.color }} !important;">{{ status_info.name|raw }}</span>
+                    {% endif %}
+
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="small control-label">Productos Asociados</label>
+        </div>
+    </div>
+
+    {% for WOItem in delivery_info.WOItemList %}
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <p class="form-control-static">{{ WOItem.name|raw }}</p>
+            </div>
+            <div class="col-sm-2">
+                <p class="form-control-static">{{ WOItem.qty|raw }}</p>
+            </div>
+        </div>
+
+    {% endfor %}
+
+    {% if delivery_info.WODeliveryStatus == status_list.reject.value %}
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label class="small control-label">Fecha de Cancelaci&oacute;n</label>
+            <p class="form-control-static">{{ delivery_info.WODeliveryCancelInfo.Date|date(dateTimeFormat)|raw }}</p>
+        </div>
+
+        <div class="col-sm-6">
+            <label class="small control-label">Usuario de Cancelaci&oacute;n</label>
+            <p class="form-control-static">{{ reject_username|raw }}</p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label class="small control-label">Motivo de Cancelaci&oacute;n</label>
+            <p class="form-control-static">{{ delivery_info.WODeliveryCancelInfo.Comment|raw }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="BNBottomMenu">
+        <div class="pull-right">
+            <button class="btn btn-default" onclick="BN.WinClose(); return false;">Cerrar</button>
+        </div>
+    </div>
+
+</form>

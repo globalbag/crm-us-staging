@@ -1,0 +1,65 @@
+<form id="{{ FormID }}" name="{{ FormID }}" class="form-horizontal" action="{{ FormUrl }}" method="post" autocomplete="off">
+    <input type="hidden" name="cmd" value="{{ cmd|raw }}"/>
+    {% if cmd == 'edit_save' %}
+        <input name="BrandID" type="hidden" >
+        <input name="BFamilyID" type="hidden" >
+    {% endif %}
+
+
+    {% if cmd == 'new_add' %}
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="BrandID">Marca</label>
+        <div class="col-xs-10">
+            <select id="BrandID" name="BrandID" class="form-control" data-rule-required="true"></select>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="BFamilyName">Nombre</label>
+        <div class="col-xs-10">
+            <input id="BFamilyName" name="BFamilyName" type="text" class="form-control" data-rule-required="true" autofocus>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="BFamilyCode">Alias</label>
+        <div class="col-xs-10">
+            <input id="BFamilyCode" name="BFamilyCode" type="text" class="form-control" data-rule-required="true" >
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="BFamilyPublished">Público</label>
+        <div class="col-xs-10">
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="BFamilyPublished" id="BFamilyPublished" value="1" class="form-">
+                </label>
+            </div>
+
+    </div>
+
+    {% if cmd == 'edit_save' %}
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="RowOrder">Orden</label>
+        <div class="col-xs-3">
+            <input id="RowOrder" name="RowOrder" type="text" class="form-control" >
+        </div>
+    </div>
+    {% endif %}
+
+</form>
+
+<div class="BN_BottomMenu">
+    <button type="button" class="btn" onclick="BN.WinClose();">Cerrar</button>
+    <button class="btn btn-primary" id="ActionButton" form="{{ FormID }}" type="submit">{% if cmd == 'new_add' %}Agregar{% else %}Guardar{% endif %}</button>
+</div>
+
+
+<script type="text/javascript">
+
+    BN.Form('{{ FormID }}');
+
+</script>
